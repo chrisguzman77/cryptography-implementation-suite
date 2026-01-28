@@ -1,0 +1,20 @@
+[project]
+name = "crypto-implementation-suite"
+version = "0.1.0"
+description = "Learning-focused implementations of RSA, Diffie-Hellman, and simplified ECC with weak-parameter attack demos."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0", "ruff>=0.6.0"]
+
+[tool.uv]
+package = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[project.scripts]
+crypto-suite = "crypto_suite.cli:main"

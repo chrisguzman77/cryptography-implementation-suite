@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: crypto-implementation-suite
+Version: 0.1.0
+Summary: Learning-focused implementations of RSA, Diffie-Hellman, and simplified ECC with weak-parameter attack demos.
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"
+Requires-Dist: ruff>=0.6.0; extra == "dev"
+Dynamic: license-file
+
+# cryptography-implementation-suite
