@@ -4,6 +4,7 @@ import secrets
 
 from crypto_suite.utils.math import modexp
 
+
 def is_probable_prime(n: int, rounds: int = 32) -> bool:
     """Miller-Rabin primality test.
     - Deterministic for small n with certain bases, but we use randomized bases for learning.
@@ -16,7 +17,7 @@ def is_probable_prime(n: int, rounds: int = 32) -> bool:
         return True
     if any(n % p == 0 for p in small_primes):
         return False
-    
+
     # write n-1 = d * 2^s with d odd
     d = n - 1
     s = 0
@@ -25,27 +26,29 @@ def is_probable_prime(n: int, rounds: int = 32) -> bool:
         s += 1
 
     for _ in range(rounds):
-        a = secrets.randbelow(n - 3) + 2 # [2, n-2]
+        a = secrets.randbelow(n - 3) + 2  # [2, n-2]
         x = modexp(a, d, n)
         if x in (1, n - 1):
             continue
         witness = True
         for _r in range(s - 1):
-            x = (x * x) % n 
-            if x == n -1:
+            x = (x * x) % n
+            if x == n - 1:
                 witness = False
                 break
         if witness:
             return False
     return True
 
+
 def random_odd_int(bits: int) -> int:
     if bits < 2:
         raise ValueError("bits must be >= 2")
     n = secrets.randbits(bits)
     n |= 1
-    n |= 1 << (bits - 1) # ensure top bit set
+    n |= 1 << (bits - 1)  # ensure top bit set
     return n
+
 
 def generate_prime(bits: int) -> int:
     """Generate a probable prime of size 'bits'."""
@@ -53,7 +56,7 @@ def generate_prime(bits: int) -> int:
         cand = random_odd_int(bits)
         if is_probable_prime(cand):
             return cand
-        
+
 
 def pollard_rho(n: int) -> int | None:
     """Very small Pollard Rho factor finder. Returns a non-trivial factor or None."""
@@ -63,10 +66,10 @@ def pollard_rho(n: int) -> int | None:
         return 3
     if n < 2:
         return None
-    
+
     def f(x: int, c: int) -> int:
         return (x * x + c) % n
-    
+
     for _attempt in range(10):
         x = secrets.randbelow(n - 2) + 2
         y = x
@@ -79,6 +82,7 @@ def pollard_rho(n: int) -> int | None:
         if d != n:
             return d
     return None
+
 
 def gcd(a: int, b: int) -> int:
     while b:
