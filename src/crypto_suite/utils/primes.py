@@ -58,29 +58,57 @@ def generate_prime(bits: int) -> int:
             return cand
 
 
-def pollard_rho(n: int) -> int | None:
-    """Very small Pollard Rho factor finder. Returns a non-trivial factor or None."""
+def trial_division(n: int, limit: int = 100_000) -> int | None:
+    """Try small primes up to 'limit' to find a factor quickly."""
+    if n % 2 == 0:
+        return 2
+    f = 3
+    while f * f <= n and f <= limit:
+        if n % f == 0:
+            return f
+        f += 2
+    return None
+
+
+def pollard_rho(n: int, max_steps: int = 200_000, attempts: int = 20) -> int | None:
+    """Pollard Rho factor finder with iteration caps to avoid hanging.
+    Returns a non-trivial factor or None if not found quickly.
+    """
+
     if n % 2 == 0:
         return 2
     if n % 3 == 0:
         return 3
     if n < 2:
         return None
+    small = trial_division(n, limit=50_000)
+    if small is not None and small not in (1, n):
+        return small
 
     def f(x: int, c: int) -> int:
         return (x * x + c) % n
 
-    for _attempt in range(10):
+    for _attempt in range(attempts):
         x = secrets.randbelow(n - 2) + 2
         y = x
         c = secrets.randbelow(n - 1) + 1
         d = 1
-        while d == 1:
+
+        for step in range(max_steps):
+            # If we haven't made progress in a while, restart this attempt
+            if step > 0 and step % 100_000 == 0:
+                break
+
             x = f(x, c)
             y = f(f(y, c), c)
             d = gcd(abs(x - y), n)
-        if d != n:
-            return d
+
+            if d == n:
+                # failure for this attempt; restart with new parameters
+                break
+            if d > 1:
+                return d
+
     return None
 
 

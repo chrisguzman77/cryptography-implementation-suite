@@ -16,7 +16,7 @@ class Curve:
     def field(self) -> ModPrimeField:
         return ModPrimeField(self.p)
 
-    def is_on_curve(self, P: "Point") -> bool:
+    def is_on_curve(self, P: Point) -> bool:
         if P.is_infinity:
             return True
         x, y = P.x, P.y

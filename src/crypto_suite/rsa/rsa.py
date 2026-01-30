@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 from crypto_suite.utils.encoding import bytes_to_int, int_to_bytes, toy_pad, toy_unpad
 from crypto_suite.utils.math import modexp, modinv
-from crypto_suite.utils.primes import generate_prime, gcd
+from crypto_suite.utils.primes import gcd, generate_prime
 
 
 @dataclass(frozen=True)
@@ -16,12 +16,33 @@ class RSAKeyPair:
     q: int
 
 
-def keygen(bits: int = 2048, e: int = 65537) -> RSAKeyPair:
+def keypair_from_primes(p: int, q: int, e: int = 65537) -> RSAKeyPair:
+    """Build an RSA keypair from primes p and q (learning only)."""
+    if p == q:
+        raise ValueError("p and q must be different")
+    n = p * q
+    phi = (p - 1) * (q - 1)
+    if gcd(e, phi) != 1:
+        raise ValueError("e is not coprime with phi; regenerate primes")
+    d = modinv(e, phi)
+    return RSAKeyPair(n=n, e=e, d=d, p=p, q=q)
+
+
+def keygen(bits: int = 2048, e: int = 65537, *, allow_unsafe: bool = False) -> RSAKeyPair:
     """Generate RSA keys.
-    For learning: use probable primes + basic checks. not hardened for production.
+
+    Learning-only:
+    - Uses probable primes
+    - Not hardened (no constant-time, no CRT, no OAEP/PSS)
+
+    allow_unsafe:
+    - When True, permits small key sizes for attack demonstrations.
     """
-    if bits < 512:
-        raise ValueError("Use >= 512 bits even for demos; smaller is for explicitl attacks.")
+    if bits < 512 and not allow_unsafe:
+        raise ValueError("Use >=512 bits unless allow_unsafe=True for attack demonstrations.")
+    if bits < 192:
+        raise ValueError("Too small to be meaningful even for demos; use >=192 bits.")
+
     half = bits // 2
 
     while True:
