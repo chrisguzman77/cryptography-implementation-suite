@@ -142,23 +142,26 @@ DH Shared	| Fast	| Same complexity as public
 ECC Scalar Mult	| Very Fast	| Smaller operands
 
 (Actual timings vary by CPU.)
+---
 
-Mathematical Foundations
+## Mathematical Foundations
 
 This project directly applies:
 
-✔ Modular arithmetic
-✔ Prime number theory
-✔ Groups & finite fields
-✔ Discrete logarithms
-✔ Elliptic curve algebra
+- Modular arithmetic
+- Prime number theory
+- Groups & finite fields
+- Discrete logarithms
+- Elliptic curve algebra
 
 It is designed to bridge the gap between abstract cryptography and real implementations.
 
-Project Architecture
+---
+
+## Project Architecture
 
 Uses a professional src layout:
-
+```
 src/
    crypto_suite/
       rsa/
@@ -167,65 +170,78 @@ src/
       utils/
       benchmarks/
 tests/
-
+```
 
 Tooling:
 
-uv — reproducible Python environments
+- uv — reproducible Python environments
 
-Ruff — linting & formatting
+- Ruff — linting & formatting
 
-pytest — automated tests
+- pytest — automated tests
 
-GitHub Actions — CI ready
+- GitHub Actions — CI ready
 
-Getting Started
+---
+
+## Getting Started
+
 Install dependencies
+```
 uv sync --extra dev
-
+```
 Run the demo suite
+```
 uv run crypto-suite all
-
+```
 Run attacks only
+```
 uv run crypto-suite rsa-attacks
-
+```
 Run tests
+```
 uv run pytest
-
+```
 Lint the project
+```
 uv run ruff check .
 uv run ruff format .
+```
 
-Demo Modes
+---
+
+##Demo Modes
 
 The project separates RSA into two modes:
 
-Realistic Demo Mode
+### Realistic Demo Mode
 
 Used for encryption/signature demonstrations.
 
 Key sizes:
 
-1024-bit (fast demo)
+- 1024-bit (fast demo)
 
-2048-bit (realistic)
+- 2048-bit (realistic)
 
-Attack Demo Mode
+### Attack Demo Mode
 
 Generates intentionally weak RSA keys that are guaranteed to be factorable quickly for educational purposes.
 
-Why This Project Exists
+---
+
+## Why This Project Exists
 
 Most developers use crypto libraries without understanding the underlying mechanics.
 
 This project was built to deeply understand:
 
-why cryptosystems are secure
+- why cryptosystems are secure
 
-how they fail
+- how they fail
 
-what parameters matter
+- what parameters matter
 
-how performance scales
+- how performance scales
 
 It reflects the mindset required for security engineering rather than just application development.
