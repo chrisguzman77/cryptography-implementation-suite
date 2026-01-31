@@ -1,34 +1,38 @@
-Cryptography Implementation Suite
+# Cryptography Implementation Suite
 
 A learning-focused cryptography project implementing core public-key systems from scratch in Python, along with attack demonstrations and performance benchmarks.
 
 This project emphasizes mathematical understanding, security intuition, and engineering discipline rather than relying on black-box crypto libraries.
 
-Educational Disclaimer
+---
+
+## Educational Disclaimer
 
 Do NOT use this code in production.
 
 This repository is intentionally designed for:
 
-education
+- education
 
-experimentation
+- experimentation
 
-security research
+- security research
 
-portfolio demonstration
+- portfolio demonstration
 
 It lacks production protections such as:
 
-constant-time implementations
+- constant-time implementations
 
-hardened padding schemes (OAEP / PSS)
+- hardened padding schemes (OAEP / PSS)
 
-side-channel resistance
+- side-channel resistance
 
-formally audited primitives
+- formally audited primitives
 
 Always use vetted libraries like cryptography for real-world applications.
+
+---
 
 Implemented Cryptosystems
 RSA (Rivest–Shamir–Adleman)
