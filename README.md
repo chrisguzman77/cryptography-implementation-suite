@@ -34,8 +34,8 @@ Always use vetted libraries like cryptography for real-world applications.
 
 ---
 
-Implemented Cryptosystems
-RSA (Rivest–Shamir–Adleman)
+## Implemented Cryptosystems
+### RSA (Rivest–Shamir–Adleman)
 
 Features:
 
@@ -48,15 +48,17 @@ Features:
 
 Concepts demonstrated:
 
-Modular exponentiation
+- Modular exponentiation
 
-Euler’s Totient
+- Euler’s Totient
 
-Prime generation
+- Prime generation
 
-Public vs private exponents
+- Public vs private exponents
 
-Diffie–Hellman (Finite Field)
+---
+
+### Diffie–Hellman (Finite Field)
 
 Features:
 
@@ -67,13 +69,15 @@ Features:
 
 Concepts demonstrated:
 
-Cyclic groups
+- Cyclic groups
 
-Discrete logarithm hardness
+- Discrete logarithm hardness
 
-Key exchange without prior secrets
+- Key exchange without prior secrets
 
-Elliptic Curve Cryptography (Simplified)
+---
+
+### Elliptic Curve Cryptography (Simplified)
 
 Features:
 
@@ -84,55 +88,58 @@ Features:
 
 Concepts demonstrated:
 
-Finite fields
+- Finite fields
 
-Elliptic curve group law
+- Elliptic curve group law
 
-Scalar multiplication
+- Scalar multiplication
 
-Security-per-bit advantages
+- Security-per-bit advantages
 
-Attack Demonstrations
+## Attack Demonstrations
 
 This suite intentionally generates weak parameters to demonstrate why cryptographic best practices matter.
 
-RSA Factorization
+### RSA Factorization
 
 Uses:
 
-Trial division
+- Trial division
 
-Pollard Rho
+- Pollard Rho
 
 A deliberately weak RSA modulus is constructed with an intentionally small prime factor so the attack completes deterministically.
 
-Low-Exponent RSA Attack
+### Low-Exponent RSA Attack
 
 Shows how RSA without padding can leak plaintext when using small public exponents (e.g., e = 3).
 
-Discrete Log Attack
+### Discrete Log Attack
 
 Brute-forces small DH groups to demonstrate why large primes are required.
 
-Benchmarks
+---
+
+## Benchmarks
 
 The project includes a benchmarking framework comparing cryptographic operations such as:
 
-RSA key generation
+- RSA key generation
 
-DH public key computation
+- DH public key computation
 
-DH shared secret derivation
+- DH shared secret derivation
 
-ECC scalar multiplication
+- ECC scalar multiplication
 
 Example output:
 
-Primitive	Avg Time	Notes
-RSA Keygen	Slow	Expected due to prime generation
-DH Public	Fast	Single modular exponentiation
-DH Shared	Fast	Same complexity as public
-ECC Scalar Mult	Very Fast	Smaller operands
+| Primitive	| Avg Time	| Notes
+|-----------|-----------|-------|
+RSA Keygen	| Slow	| Expected due to prime generation
+DH Public	| Fast	| Single modular exponentiation
+DH Shared	| Fast	| Same complexity as public
+ECC Scalar Mult	| Very Fast	| Smaller operands
 
 (Actual timings vary by CPU.)
 
