@@ -210,7 +210,7 @@ uv run ruff format .
 
 ---
 
-##Demo Modes
+## Demo Modes
 
 The project separates RSA into two modes:
 
